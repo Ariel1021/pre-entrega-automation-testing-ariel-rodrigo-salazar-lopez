@@ -120,3 +120,35 @@ def test_04_validar_interfaz(driver):
     assert filtro.is_displayed(), (
         "ERROR: El filtro de ordenamiento no está visible"
     )
+
+
+def test_05_anadir_producto_al_carrito(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Obtener el primer producto
+    first_item = WebDriverWait(driver, 10).until(
+        EC.visibility_of_all_elements_located(
+            (By.CLASS_NAME, "inventory_item")
+        )
+    )[0]
+
+    # Obtener y pulsar el botón para agregarlo al carrito
+    boton_agregar = first_item.find_element(By.TAG_NAME, "button")
+    boton_agregar.click()
+
+    # Esperar a que el botón cambie a "Remove"
+    WebDriverWait(driver, 10).until(
+        EC.text_to_be_present_in_element(
+            (By.CSS_SELECTOR, ".inventory_item button"),
+            "Remove"
+        )
+    )
+
+    # Volver a obtener el botón y validar el cambio
+    boton_agregar = first_item.find_element(By.TAG_NAME, "button")
+
+    # Validar que el boton haya cambiado a Remove
+    assert boton_agregar.text == "Remove", (
+        'ERROR: El botón no cambió a "Remove"'
+    )
