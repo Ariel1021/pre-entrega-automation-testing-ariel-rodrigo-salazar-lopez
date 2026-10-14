@@ -74,3 +74,21 @@ def test_02_verificar_inventario(driver):
         f'ERROR: Título de sección esperado "Products", '
         f'obtenido "{section_title}"'
     )
+
+
+def test_03_productos_visibles(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Obtener los productos del inventario
+    inventory_items = WebDriverWait(driver, 10).until(
+        EC.visibility_of_all_elements_located(
+            (By.CLASS_NAME, "inventory_item")
+        )
+    )
+
+    # Verificar que haya productos visibles
+    assert len(inventory_items) > 0, (
+        "ERROR: No se encontraron productos visibles en el inventario"
+    )
+
