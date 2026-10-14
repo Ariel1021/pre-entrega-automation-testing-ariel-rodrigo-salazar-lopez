@@ -179,3 +179,28 @@ def test_06_verificar_contador_carrito(driver):
     assert contador_carrito.text == "1", (
         f"ERROR: Se esperaba 1, se obtuvo {contador_carrito.text}"
     )
+
+
+def test_07_navegar_carrito(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Esperar a que el enlace del carrito sea visible
+    carrito = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.CLASS_NAME, "shopping_cart_link")
+        )
+    )
+
+    # Navegar al carrito
+    carrito.click()
+
+    # Esperar a que la URL cambie
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("/cart.html")
+    )
+
+    # Validar la navegación
+    assert "/cart.html" in driver.current_url, (
+        "ERROR: No se redirigió a /cart.html"
+    )
