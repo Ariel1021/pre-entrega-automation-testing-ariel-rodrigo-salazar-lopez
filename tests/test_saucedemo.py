@@ -152,3 +152,30 @@ def test_05_anadir_producto_al_carrito(driver):
     assert boton_agregar.text == "Remove", (
         'ERROR: El botón no cambió a "Remove"'
     )
+
+
+def test_06_verificar_contador_carrito(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Agregar el primer producto al carrito
+    first_item = WebDriverWait(driver, 10).until(
+        EC.visibility_of_all_elements_located(
+            (By.CLASS_NAME, "inventory_item")
+        )
+    )[0]
+
+    boton_agregar = first_item.find_element(By.TAG_NAME, "button")
+    boton_agregar.click()
+
+    # Esperar a que aparezca el contador del carrito
+    contador_carrito = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.CLASS_NAME, "shopping_cart_badge")
+        )
+    )
+
+    # Validar que el contador sea 1
+    assert contador_carrito.text == "1", (
+        f"ERROR: Se esperaba 1, se obtuvo {contador_carrito.text}"
+    )
