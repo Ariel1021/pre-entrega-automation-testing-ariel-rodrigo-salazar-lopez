@@ -77,6 +77,7 @@ def test_02_verificar_inventario(driver):
 
 
 def test_03_productos_visibles(driver):
+
     # Inicio de sesión
     iniciar_sesion(driver)
 
@@ -92,3 +93,30 @@ def test_03_productos_visibles(driver):
         "ERROR: No se encontraron productos visibles en el inventario"
     )
 
+
+def test_04_validar_interfaz(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Esperar a que el botón del menú sea visible
+    menu_button = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.ID, "react-burger-menu-btn")
+        )
+    )
+
+    # Esperar a que el filtro de ordenamiento sea visible
+    filtro = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.CLASS_NAME, "product_sort_container")
+        )
+    )
+
+    # Validar que ambos elementos estén visibles
+    assert menu_button.is_displayed(), (
+        "ERROR: El botón del menú no está visible"
+    )
+
+    assert filtro.is_displayed(), (
+        "ERROR: El filtro de ordenamiento no está visible"
+    )
