@@ -93,6 +93,19 @@ def test_03_productos_visibles(driver):
         "ERROR: No se encontraron productos visibles en el inventario"
     )
 
+    # Valido nombre y precio del primer producto
+    first_item = inventory_items[0]
+    nombre = first_item.find_element(
+        By.CLASS_NAME, "inventory_item_name"
+    ).text
+
+    precio = first_item.find_element(
+        By.CLASS_NAME, "inventory_item_price"
+    ).text
+
+    assert nombre == 'Sauce Labs Backpack'
+    assert precio == '$29.99'
+
 
 def test_04_validar_interfaz(driver):
     # Inicio de sesión
