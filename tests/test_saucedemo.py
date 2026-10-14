@@ -204,3 +204,45 @@ def test_07_navegar_carrito(driver):
     assert "/cart.html" in driver.current_url, (
         "ERROR: No se redirigió a /cart.html"
     )
+
+
+def test_08_comprobar_producto_en_el_carrito(driver):
+    # Inicio de sesión
+    iniciar_sesion(driver)
+
+    # Obtener el primer producto del inventario
+    first_item = WebDriverWait(driver, 10).until(
+        EC.visibility_of_all_elements_located(
+            (By.CLASS_NAME, "inventory_item")
+        )
+    )[0]
+
+    # Obtener el nombre del producto seleccionado
+    producto_seleccionado = first_item.find_element(
+        By.CLASS_NAME, "inventory_item_name"
+    ).text
+
+    # Agregar el producto al carrito
+    boton_agregar = first_item.find_element(By.TAG_NAME, "button")
+    boton_agregar.click()
+
+    # Navegar al carrito
+    carrito = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable(
+            (By.CLASS_NAME, "shopping_cart_link")
+        )
+    )
+    carrito.click()
+
+    # Obtener el nombre del producto en el carrito
+    producto_en_carrito = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.CLASS_NAME, "inventory_item_name")
+        )
+    ).text
+
+    # Comparar ambos nombres
+    assert producto_en_carrito == producto_seleccionado, (
+        f"ERROR: El producto del carrito ('{producto_en_carrito}') "
+        f"no coincide con el seleccionado ('{producto_seleccionado}')"
+    )
