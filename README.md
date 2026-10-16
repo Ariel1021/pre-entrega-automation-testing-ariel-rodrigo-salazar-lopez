@@ -89,11 +89,11 @@ Cada test prepara su propio estado inicial para poder ejecutarse de forma indepe
 ```text
 
 pre-entrega-automation-testing-ariel-rodrigo-salazar-lopez/
-├── pages/
-│   └── LoginPage.py
+
 ├── tests/
 │   └── test_saucedemo.py
 ├── utils/
+│   └── helpers.py
 ├── reports/
 │   ├── assets
 │   │   └── style.css
