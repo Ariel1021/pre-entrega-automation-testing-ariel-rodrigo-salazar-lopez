@@ -6,24 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from pages.LoginPage import LoginPage
-
-def iniciar_sesion(driver):
-    # Abrir la página de login
-    driver.get("https://www.saucedemo.com/")
-
-    # Esperar a que el campo de usuario sea visible
-    WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.ID, "user-name"))
-    )
-
-    # Hacer login 
-    login = LoginPage(driver)
-    login.hacer_login("standard_user", "secret_sauce")
-
-    WebDriverWait(driver, 10).until(
-        EC.url_contains("/inventory.html")
-    )
+from utils.helpers import iniciar_sesion
 
 @pytest.fixture()
 def driver():
@@ -41,16 +24,22 @@ def driver():
 
 def test_01_login_exitoso(driver):
 
-    # Inicio de sesión
-    iniciar_sesion(driver)
+    # Abrir la página de login
+    driver.get('https://www.saucedemo.com')
 
-    # Validar el título de la sección
-    titulo = WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "title"))
+    # Esperar a que el campo de usuario sea visible
+    WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.ID, "user-name"))
     )
+    driver.find_element(By.ID, 'user-name').send_keys('standard_user')
+    driver.find_element(By.ID, 'password').send_keys('secret_sauce')
+    driver.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
 
-    # Validar título de la sección
-    assert titulo.text == "Products"
+    # Validar inventario
+    WebDriverWait(driver, 10).until(
+            EC.url_contains("/inventory.html")
+        )
+    assert "/inventory.html" in driver.current_url, "ERROR: No se redirigió  a /inventory.html"
 
 
 def test_02_verificar_inventario(driver):
