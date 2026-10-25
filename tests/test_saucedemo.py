@@ -1,25 +1,10 @@
-import pytest
-from selenium import webdriver
+
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from utils.helpers import iniciar_sesion
-
-@pytest.fixture()
-def driver():
-    options = Options()
-    options.add_argument('--lang=es')
-
-    driver = webdriver.Chrome(options=options)
-
-    driver.implicitly_wait(10)
-
-    yield driver
-
-    driver.quit()
 
 
 def test_01_login_exitoso(driver):
