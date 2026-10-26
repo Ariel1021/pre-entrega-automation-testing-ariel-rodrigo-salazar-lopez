@@ -58,8 +58,7 @@ class InventoryPage:
         """Navega a la página del carrito."""
         self.driver.find_element(*self._CART_LINK).click()
         # Importación lazy para evitar dependencias circulares
-        from pages.cart_page import CartPage
-        return CartPage(self.driver)
+        return self
 
     def menu_visible(self):
         """Indica si el botón del menú está visible."""

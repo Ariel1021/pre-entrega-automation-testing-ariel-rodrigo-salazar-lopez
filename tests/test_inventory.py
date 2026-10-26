@@ -47,11 +47,6 @@ def test_02_productos_visibles(driver):
         f"ERROR: Precio esperado '$29.99', obtenido '{precio}'"
     )
 
-
-from pages.inventory_page import InventoryPage
-from utils.helpers import iniciar_sesion
-
-
 def test_03_validar_interfaz(driver):
     iniciar_sesion(driver)
     inventory_page = InventoryPage(driver)
