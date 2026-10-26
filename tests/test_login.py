@@ -1,8 +1,6 @@
 from pages.login_page import LoginPage
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from utils.helpers import iniciar_sesion
 
 
 def test_01_login_completo_exitoso(driver):
