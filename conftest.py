@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
+# function permite que se ejecute en cada función
 @pytest.fixture(scope="function")
 def driver():
     #Fixture que proporciona un WebDriver configurado.
