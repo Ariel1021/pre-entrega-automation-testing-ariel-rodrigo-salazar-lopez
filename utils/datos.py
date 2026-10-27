@@ -8,13 +8,21 @@ def leer_csv_login(ruta_archivo):
     """
     datos = []
     ruta = pathlib.Path(ruta_archivo)
+
+    if not ruta.exists():
+        raise FileNotFoundError(f"No se encontró el archivo: {ruta}")
     
     with open(ruta, newline='', encoding='utf-8') as archivo:
         lector = csv.DictReader(archivo)
         for fila in lector:
             # Convertir string 'True'/'False' a booleano
             debe_funcionar = fila['debe_funcionar'].lower() == 'true'
-            datos.append((fila['usuario'], fila['clave'], debe_funcionar))
+            datos.append((
+                fila['usuario'], 
+                fila['clave'], 
+                debe_funcionar,
+                fila['descripcion']
+            ))
     
     return datos
 
@@ -24,10 +32,15 @@ def leer_json_productos(ruta_archivo):
     """
     Lee un archivo JSON con información de productos
     """
-    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+
+    ruta = pathlib.Path(ruta_archivo)
+    
+    if not ruta.exists():
+        raise FileNotFoundError(f"No se encontró el archivo: {ruta}")
+    
+    with open(ruta, 'r', encoding='utf-8') as archivo:
         productos = json.load(archivo)
     
     # Extraer solo los nombres para parametrización
-    nombres = [producto['nombre'] for producto in productos]
-    return nombres
+    return productos
 
