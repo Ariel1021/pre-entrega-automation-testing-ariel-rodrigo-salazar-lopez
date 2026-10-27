@@ -60,6 +60,12 @@ class InventoryPage:
         # Importación lazy para evitar dependencias circulares
         return self
 
+    def esperar_contador_carrito(self):
+        """Espera a que aparezca el contador del carrito."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self._CART_BADGE)
+        )
+
     def menu_visible(self):
         """Indica si el botón del menú está visible."""
         return self.wait.until(
