@@ -6,8 +6,8 @@ from utils.datos import leer_csv_login
 # Cargar datos del CSV
 CASOS_LOGIN = leer_csv_login('datos/login.csv')
 
-@pytest.mark.parametrize("usuario, clave, debe_funcionar", CASOS_LOGIN)
-def test_login_desde_csv(driver, usuario, clave, debe_funcionar):
+@pytest.mark.parametrize("usuario, clave, debe_funcionar, descripcion", CASOS_LOGIN)
+def test_login_desde_csv(driver, usuario, clave, descripcion, debe_funcionar):
 
     #Test parametrizado que verifica el login con datos del CSV
 
