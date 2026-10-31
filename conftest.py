@@ -13,11 +13,18 @@ def driver():
     # Para CI/CD
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    prefs = {
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False,
+        "profile.password_manager_leak_detection": False
+    }
+    chrome_options.add_experimental_option("prefs", prefs)
+
 
     service = Service()
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.maximize_window()
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(1)
 
     yield driver
 
