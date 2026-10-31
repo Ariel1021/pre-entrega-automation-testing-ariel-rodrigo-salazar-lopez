@@ -22,7 +22,7 @@ def test_login_desde_csv(driver, usuario, clave, descripcion, debe_funcionar):
     # Paso 2: Completar credenciales
     login.completar_usuario(usuario)
     login.completar_clave(clave)
-    login.enviar()
+    login.hacer_clic_login()
 
     # Paso 3: Verificar resultado esperado
     if debe_funcionar:
@@ -35,7 +35,7 @@ def test_login_desde_csv(driver, usuario, clave, descripcion, debe_funcionar):
         print(f"   ✅ Login exitoso - llegó al inventario")
     else:
         # Login fallido: debe mostrar error
-        assert login.hay_error(), f"No se mostró error para {usuario}"
+        assert login.esta_error_visible(), f"No se mostró error para {usuario}"
         mensaje_error = login.obtener_mensaje_error()
         assert len(mensaje_error) > 0, "El mensaje de error está vacío"
         print(f"   ❌ Login falló correctamente - Error: {mensaje_error}")
