@@ -20,7 +20,10 @@ def usuario_logueado(driver):
     
     return InventoryPage(driver)
 
-@pytest.mark.parametrize("nombre_producto", PRODUCTOS)
+@pytest.mark.parametrize(
+    "nombre_producto",
+    [producto["nombre"] for producto in PRODUCTOS]
+)
 def test_agregar_producto_desde_json(usuario_logueado, nombre_producto):
     """
     Test que agrega cada producto del JSON al carrito

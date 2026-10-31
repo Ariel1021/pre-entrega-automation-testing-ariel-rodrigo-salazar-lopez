@@ -1,6 +1,8 @@
 import pytest
 from faker import Faker
 from pages.registro_page import RegistroPage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def test_registro_usuario_aleatorio(driver):
     """Test que usa Faker para generar datos aleatorios"""
@@ -17,6 +19,9 @@ def test_registro_usuario_aleatorio(driver):
     registro_page.enviar()
     
     # Verificar que la URL cambió (indicando que se procesó el form)
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("email_sent")
+    )
     assert "email_sent" in driver.current_url, "No se procesó el formulario correctamente"
     
     # Verificar que apareció el mensaje

@@ -45,20 +45,42 @@ class InventoryPage:
         primer_boton = self.driver.find_elements(*self._ADD_BUTTONS)[0]
         primer_boton.click()
         return self
+
+    def agregar_producto_por_nombre(self, nombre_producto):
+        """
+        Agrega un producto específico al carrito buscándolo por nombre
+        """
+        productos = self.driver.find_elements(*self._PRODUCTS)
+        
+        for producto in productos:
+            try:
+                nombre_elemento = producto.find_element(By.CLASS_NAME, "inventory_item_name")
+                if nombre_elemento.text == nombre_producto:
+                    boton_agregar = producto.find_element(By.TAG_NAME, "button")
+                    boton_agregar.click()
+                    return True
+            except Exception as e:
+                continue
+        
+        raise Exception(f"No se encontró el producto: {nombre_producto}")
     
     def obtener_contador_carrito(self):
         """Obtiene el número de productos en el carrito."""
-        try:
-            badge = self.driver.find_element(*self._CART_BADGE)
-            return int(badge.text)
-        except:
-            return 0
+        self.driver.implicitly_wait(0)
+        badges = self.driver.find_elements(*self._CART_BADGE)
+        return int(badges[0].text) if badges else 0
         
     def ir_al_carrito(self):
         """Navega a la página del carrito."""
         self.driver.find_element(*self._CART_LINK).click()
         # Importación lazy para evitar dependencias circulares
         return self
+
+    def esperar_contador_carrito(self):
+        """Espera a que aparezca el contador del carrito."""
+        return self.wait.until(
+            EC.visibility_of_element_located(self._CART_BADGE)
+        )
 
     def menu_visible(self):
         """Indica si el botón del menú está visible."""
