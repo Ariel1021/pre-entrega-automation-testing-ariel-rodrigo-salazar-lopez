@@ -92,8 +92,14 @@ pre-entrega-automation-testing-ariel-rodrigo-salazar-lopez/
 
 ├── tests/
 │   └── test_saucedemo.py
+│ ...actualizar
 ├── utils/
 │   └── helpers.py
+├── pages/
+│   ├── cart_page.py
+│   ├── inventory_page.py
+│   ├── login_page.py
+│   └── registro_page.py
 ├── reports/
 │   ├── assets
 │   │   └── style.css
