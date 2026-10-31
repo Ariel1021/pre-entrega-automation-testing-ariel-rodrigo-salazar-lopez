@@ -1,5 +1,6 @@
 import csv
 import pathlib, json
+import json
 
 def leer_csv_login(ruta_archivo):
     """
@@ -25,8 +26,6 @@ def leer_csv_login(ruta_archivo):
             ))
     
     return datos
-
-import json
 
 def leer_json_productos(ruta_archivo):
     """
